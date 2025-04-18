@@ -37,37 +37,22 @@ def detect_faces(image):
 
 def main():
     st.title("Face Detection App")
-    
-    # File uploader
     uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
     
     if uploaded_file is not None:
-        # Read image
         image = Image.open(uploaded_file)
-        
-        # Process image
         with st.spinner('Detecting faces...'):
-            # Convert PIL Image to RGB (OpenCV uses BGR)
             image = image.convert('RGB')
-            
-            # Detect faces
             result_image, face_count = detect_faces(image)
             
-            # Display results
             col1, col2 = st.columns(2)
             with col1:
                 st.subheader("Original Image")
                 st.image(image, use_column_width=True)
-            
             with col2:
                 st.subheader("Detected Faces")
                 st.image(result_image, use_column_width=True)
-            
-            # Display detection info
             st.success(f"Found {face_count} faces in the image!")
 
 if __name__ == "__main__":
     main()
-
-        st.markdown(get_image_download_link(out_image, "face_output.jpg", 'Download Output Image'),
-                   unsafe_allow_html=True)
